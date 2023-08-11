@@ -18,67 +18,23 @@ export default function Create() {
       author: "",
     });
     const validateTitle = (title) => {
-        if (!title) {
-      setError({
-        ...error,
-        title: "Title is required",
-      });
-    } else if (title.length < 5) {
-      setError({
-        ...error,
-        title: "Title must have atleast 5 characters",
-      });
-    } else if (title.length > 50) {
-      setError({
-        ...error,
-        title: "Title can have 50 characters at most",
-      });
-    } else if (typeof title !== "string") {
-      setError({
-        ...error,
-        title: "Title must be a valid string value",
-      });
-    } else {
-      setError({
-        ...error,
-        title: "",
-      });
-    }
+
+
+        !title?setError({...error,title:"Title is required"}):
+        title.length<5?setError({...error,title:"Title must have atleast 5 characters"}):
+        title.length>50?setError({...error,title:"Title can have 50 characters at most"}):
+        typeof title !== 'string'?setError({...error,title:"Title must have to be a valid string"}):
+        setError({...error,title:""})
+
   };
 
   const validateAuthor = (author) => {
-    if (!author) {
-      setError({
-        ...error,
-        author: "Author is required",
-      });
-    } else if (author.length < 5) {
-      setError({
-        ...error,
-        author: "Author must have atleast 5 characters",
-      });
-    } else if (author.length > 30) {
-      setError({
-        ...error,
-        author: "Author can have 30 characters at most",
-      });
-    } else if (typeof author !== "string") {
-      setError({
-        ...error,
-        author: "Author must be a valid string value",
-      });
-    } else {
-      setError({
-        ...error,
-        author: "",
-      });
-    }
+    !author?setError({...error,author:"Author is required"}):
+    author.length<5?setError({...error,author:"Author must have atleast 5 characters"}):
+    author.length>30?setError({...error,author:"Author cam have 30 characters at most"}):
+    typeof author !=='string'?setError({...error,author:"Author must have to be a valid string"}):
+    setError({...error,author:""})
   };
-
-
-
-
-
 
 
   const validateDescription =(description)=>{
@@ -88,7 +44,13 @@ export default function Create() {
         typeof description !== 'string'?setError({...error,description:"Description must have to be a valid string"}):
         setError({...error,description:""})
     };
-  
+
+const validateContent =(content)=>{
+    !content?setError({...error,content:"Content is required"}):
+    content.length<50?setError({...error,content:"Content must have atleast 50 characters"}):
+    typeof content !== 'string' ? setError({...error,content:"Content must have to be a valid string"}):
+    setError({...error,content:""})
+}
     
 
 
@@ -107,12 +69,19 @@ export default function Create() {
       ...blog,
       description: e.target.value,
     });
+    if(onBlurDescriptionFired){
+        validateDescription(e.target.value)
+    }
   };
   const handleContentChange = (e) => {
     setBlog({
       ...blog,
       content: e.target.value,
     });
+if (onBlurContentFired) {
+    validateContent(e.target.value)
+}
+
   };
   const handleAuthorChange = (e) => {
     setBlog({
@@ -129,14 +98,20 @@ export default function Create() {
     setOnBlurFired(true);
   };
 
-  const handleDescriptionBlur = () => {};
+  const handleDescriptionBlur = () => {
+      validateDescription(blog.description);
+      setOnBlurDescriptionFired(true);
+  };
 
   const handleAuthorBlur = () => {
     validateAuthor(blog.author);
     setOnBlurAuthorFired(true);
   };
 
-  const handleContentBlur = () => {};
+  const handleContentBlur = () => {
+    validateContent(blog.content);
+    setOnBlurContentFired(true)
+  };
 
   return (
     <div className={styles.main}>
@@ -172,6 +147,8 @@ export default function Create() {
             ""
           )}
         </>
+        <>
+
         <textarea
           onBlur={handleDescriptionBlur}
           value={blog.description}
@@ -182,6 +159,15 @@ export default function Create() {
           cols="30"
           rows="10"
         ></textarea>
+        {
+            error.description?(<p className={styles.errormessage}>
+           {error.description} </p>):""
+            
+        }
+
+        </>
+
+        <>
 
         <textarea
           onBlur={handleContentBlur}
@@ -193,8 +179,19 @@ export default function Create() {
           cols="30"
           rows="10"
         ></textarea>
+        {
+            error.content?(
+                <p className={styles.errormessage}>{error.content}</p>
+            ):""
+        }
+        
+        </>
 
-        <input type="file" name="" id="" />
+        <div className={styles.photoCover}>
+        <button className={styles.photoButton}>Choose Photo</button>
+        <p className={styles.photoInfo}></p>
+        <input className={styles.photo} type="file" name="" id="" />
+        </div>
       </div>
     </div>
   );

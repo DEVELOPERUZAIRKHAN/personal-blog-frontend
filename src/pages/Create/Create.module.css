@@ -1,5 +1,55 @@
 .errormessage{
     color: red;
     font-size: 1.1rem;
-    
+
+}
+.form{
+    margin: 2rem auto;
+    max-width: 900px;
+    width: 60%;
+}
+.content{
+    display: block;
+    padding: 1rem 2rem;
+    outline: none;
+    width: 100%;
+    resize: vertical;
+}
+.description{
+    outline: none;
+    width: 100%;
+    padding: 1rem 2rem;
+    display: block;
+    resize: none;
+}
+.title{
+    display: block;
+    width: 100%;
+    outline: none;
+    padding: 1rem 2rem;
+}
+.author{
+    outline: none;
+    padding: 1rem 2rem;
+    width: 100%;
+    display: block;
+}
+
+.photo{
+    background-color: blue;
+    /* padding: 2rem; */
+    cursor: pointer;
+}
+
+.photoInfo{
+
+}
+.photoButton{
+padding: 1rem 2rem;
+border: none;
+background-color: blueviolet;
+color: #fff;
+}
+.photoCover{
+    margin-top: 2rem;
 }
