@@ -5,6 +5,7 @@ export default function Create() {
     const [onBlurAuthorFired, setOnBlurAuthorFired] = useState(false);
     const [onBlurDescriptionFired, setOnBlurDescriptionFired] = useState(false);
     const [onBlurContentFired, setOnBlurContentFired] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null)
     const [error, setError] = useState({
       title: "",
       content: "",
@@ -92,6 +93,27 @@ if (onBlurContentFired) {
       validateAuthor(e.target.value);
     }
   };
+
+
+
+
+const handlePhotoChange=(e)=>{
+    setSelectedFile(e.target.files[0])
+    console.log(e.target.files[0])
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const handleTitleBlur = () => {
     validateTitle(blog.title);
@@ -188,10 +210,12 @@ if (onBlurContentFired) {
         </>
 
         <div className={styles.photoCover}>
-        <button className={styles.photoButton}>Choose Photo</button>
-        <p className={styles.photoInfo}></p>
-        <input className={styles.photo} type="file" name="" id="" />
+        <label className={styles.photoLabel} htmlFor="inputfile">Choose a photo</label>
+        <input className={styles.photo} type="file" onChange={handlePhotoChange} name="inputfile" id="inputfile" />
+        {/* <p className={styles.photoInfo}>{}</p> */}
         </div>
+
+  
       </div>
     </div>
   );

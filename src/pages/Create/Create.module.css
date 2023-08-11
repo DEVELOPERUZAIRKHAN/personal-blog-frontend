@@ -37,19 +37,21 @@
 
 .photo{
     background-color: blue;
-    /* padding: 2rem; */
     cursor: pointer;
+    display: none;
 }
 
-.photoInfo{
-
-}
-.photoButton{
-padding: 1rem 2rem;
-border: none;
-background-color: blueviolet;
-color: #fff;
-}
 .photoCover{
+    position: relative;
     margin-top: 2rem;
 }
+
+.photoLabel{
+    background-color: blueviolet;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    
+}
+
