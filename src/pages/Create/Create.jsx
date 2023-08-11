@@ -2,7 +2,59 @@ import styles from "./Create.module.css"
 import {  useState  } from "react"
 export default function Create (){
 
+    const validateTitle= (title)=>{
+        if(!title){
+            setError({
+                ...error,
+                title:"Title is required"
+            })
+        }
+    else if(title.length<5){
+        setError({
+            ...error,
+            title:"Title must have atleast 5 characters"
+        })
+    }
+    else if(title.length>50){
+        setError({
+            ...error,
+            title:"Title can have 50 characters at most"
+        })
 
+    }
+    else if(typeof title!=='string'){
+        setError(
+            {
+                ...error,
+                title:"Title must be a valid string value"
+            }
+        )
+    }
+    else {
+            setError({
+                ...error,
+                title:""
+            })
+    }
+
+    }
+
+
+
+
+
+
+
+
+
+
+    const [onBlurFired, setOnBlurFired] = useState(false)
+    const [error,setError] = useState({
+        title:"",
+        content:"",
+        author:"",
+        description:""
+    })
     const [blog,setBlog] = useState({
         title:'',
         content:'',
@@ -15,6 +67,11 @@ export default function Create (){
                 ...blog,
                 title:e.target.value
             })
+            if(onBlurFired){
+                validateTitle(blog.title)
+            }
+
+
     }
     const handleDescriptionChange = (e) => {
             setBlog({
@@ -36,12 +93,21 @@ export default function Create (){
     }
 
     const handleTitleBlur =()=>{
-        
+       validateTitle(blog.title)
+        setOnBlurFired(true)
     }
 
 
-    const handleTitleFocus=()=>{
+    const handleDescriptionBlur=()=>{
         
+    }
+
+    const handleAuthorBlur=()=>{
+
+    }
+
+    const handleContentBlur= () =>{
+
     }
 
 
@@ -53,16 +119,28 @@ export default function Create (){
             </h1>
             <div className={styles.form}>
                 
-               {
-                <input onBlur={handleTitleBlur} onFocus={handleTitleFocus} value={blog.title} onChange={handleTitleChange} className={styles.title} type="text" />
+             
 
-               }
+            
+                <>
+
+                <input onBlur={handleTitleBlur} value={blog.title} onChange={handleTitleChange} className={styles.title} type="text" />
+                    
+                    
+                    {
+                    error.title?(
+                    <p className={styles.errormessage}>{error.title}</p>
+                    ):""
+                    }
+                </>
+                
+              
                
-                <input onBlur={} onFocus={} value={blog.author} onChange={handleAuthorChange} className={styles.author} type="text" />
+                <input onBlur={handleAuthorBlur} value={blog.author} onChange={handleAuthorChange} className={styles.author} type="text" />
                
-                <textarea onBlur={} onFocus={} value={blog.description} onChange={handleDescriptionChange} className={styles.description} name="" id="" cols="30" rows="10"></textarea>
+                <textarea onBlur={handleDescriptionBlur} value={blog.description} onChange={handleDescriptionChange} className={styles.description} name="" id="" cols="30" rows="10"></textarea>
                
-                <textarea onBlur={} onFocus={} value={blog.content} onChange={handleContentChange} className={styles.content} name="" id="" cols="30" rows="10"></textarea>
+                <textarea onBlur={handleContentBlur} value={blog.content} onChange={handleContentChange} className={styles.content} name="" id="" cols="30" rows="10"></textarea>
                
                 <input  type="file" name="" id="" />
             
