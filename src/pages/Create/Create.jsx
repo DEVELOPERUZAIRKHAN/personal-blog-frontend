@@ -2,6 +2,8 @@ import styles from "./Create.module.css"
 import {  useState  } from "react"
 export default function Create (){
 
+
+    
     const validateTitle= (title)=>{
         if(!title){
             setError({
@@ -63,15 +65,14 @@ export default function Create (){
     })
 
     const handleTitleChange = (e) => {
-            setBlog({
-                ...blog,
-                title:e.target.value
-            })
-            if(onBlurFired){
-                validateTitle(blog.title)
-            }
+        setBlog({
+            ...blog,
+            title:e.target.value
+        })
 
-
+        if(onBlurFired){
+            validateTitle(e.target.value)
+        }
     }
     const handleDescriptionChange = (e) => {
             setBlog({
