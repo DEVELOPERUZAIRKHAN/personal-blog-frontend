@@ -4,6 +4,8 @@ import Blog from "./pages/Blog/Blog";
 import BlogDetail from "./pages/BlogDetail/BlogDetail";
 import Create from "./pages/Create/Create";
 import Update from "./pages/Update/Update";
+
+
 function App() {
   return (
     <div className={styles.app}>
