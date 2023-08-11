@@ -5,7 +5,9 @@ export default function Create() {
     const [onBlurAuthorFired, setOnBlurAuthorFired] = useState(false);
     const [onBlurDescriptionFired, setOnBlurDescriptionFired] = useState(false);
     const [onBlurContentFired, setOnBlurContentFired] = useState(false);
+    const [onBlurPhotoFired, setOnBlurPhotoFired] = useState(false)
     const [selectedFile, setSelectedFile] = useState(null)
+    const [photoError,setPhotoError] = useState("")
     const [error, setError] = useState({
       title: "",
       content: "",
@@ -51,6 +53,14 @@ const validateContent =(content)=>{
     content.length<50?setError({...error,content:"Content must have atleast 50 characters"}):
     typeof content !== 'string' ? setError({...error,content:"Content must have to be a valid string"}):
     setError({...error,content:""})
+}
+
+
+const validatePhoto =(photo) =>{
+    !photo?setPhotoError("Photo is required"):
+    photo.type!==('image/png'||'image/jpeg'||'image/jpg')?setPhotoError("The file must have to be a valid image"):
+    photo.size>10*1024*1024?setPhotoError("The image size must not exceed 10MB"):
+    setPhotoError("")
 }
     
 
@@ -100,6 +110,10 @@ if (onBlurContentFired) {
 const handlePhotoChange=(e)=>{
     setSelectedFile(e.target.files[0])
     console.log(e.target.files[0])
+
+    if(onBlurPhotoFired){
+        validatePhoto(e.target.files[0])
+    }
 }
 
 
@@ -135,10 +149,16 @@ const handlePhotoChange=(e)=>{
     setOnBlurContentFired(true)
   };
 
+  const handlePhotoBlur = ()=>{
+    validatePhoto(selectedFile)
+    setOnBlurPhotoFired(true)
+    console.log("Photo blur fired")
+  }
+
   return (
     <div className={styles.main}>
-      <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
       <div className={styles.form}>
+      <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
         <>
           <input
             onBlur={handleTitleBlur}
@@ -146,6 +166,7 @@ const handlePhotoChange=(e)=>{
             onChange={handleTitleChange}
             className={styles.title}
             type="text"
+            placeholder="Enter title here"
           />
 
           {error.title ? (
@@ -162,6 +183,7 @@ const handlePhotoChange=(e)=>{
             onChange={handleAuthorChange}
             className={styles.author}
             type="text"
+            placeholder="Enter your name"
           />
           {error.author ? (
             <p className={styles.errormessage}>{error.author}</p>
@@ -180,6 +202,7 @@ const handlePhotoChange=(e)=>{
           id=""
           cols="30"
           rows="10"
+          placeholder="Enter description here"
         ></textarea>
         {
             error.description?(<p className={styles.errormessage}>
@@ -200,6 +223,7 @@ const handlePhotoChange=(e)=>{
           id=""
           cols="30"
           rows="10"
+          placeholder="Enter your content here"
         ></textarea>
         {
             error.content?(
@@ -210,12 +234,22 @@ const handlePhotoChange=(e)=>{
         </>
 
         <div className={styles.photoCover}>
-        <label className={styles.photoLabel} htmlFor="inputfile">Choose a photo</label>
-        <input className={styles.photo} type="file" onChange={handlePhotoChange} name="inputfile" id="inputfile" />
-        {/* <p className={styles.photoInfo}>{}</p> */}
-        </div>
+        <label tabIndex={0} onBlur={handlePhotoBlur} className={styles.photoLabel} htmlFor="inputfile">Choose a photo</label>
+        <input  className={styles.photo} type="file" onChange={handlePhotoChange} name="inputfile" id="inputfile" />
+       
+       {selectedFile?(
 
-  
+        <p className={styles.photoInfo}>{selectedFile.name}</p>
+       ):<p className={styles.photoInfo}>No File Choosen</p>
+
+       }
+        </div>{
+            photoError?(
+
+        <p className={styles.errormessage}>{photoError}</p>
+            ):
+            ""
+        }
       </div>
     </div>
   );

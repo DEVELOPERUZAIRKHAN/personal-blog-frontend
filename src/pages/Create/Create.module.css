@@ -44,6 +44,9 @@
 .photoCover{
     position: relative;
     margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .photoLabel{
