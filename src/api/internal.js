@@ -7,10 +7,9 @@ const api = axios.create({
 })
 
 
-async function createBlog (data){
+export const createBlog=async (data)=>{
 
-
-try{
+try{    
     const response = await api.post("/create",data)
     return response
 }
@@ -21,7 +20,7 @@ catch(error){
 
 }
 
-async function deleteBlog(id){
+export const deleteBlog=async(id)=>{
     try{
         const response = await api.delete("/blogs/"+id)
         return response;
@@ -33,7 +32,7 @@ async function deleteBlog(id){
 }
 
 
-async function editBlog(id){
+export const editBlog=async(id)=>{
     try {
             const response = await api.put("/blogs/"+id)
             return response;
@@ -46,7 +45,7 @@ async function editBlog(id){
 }
 
 
-async function getById(id){
+export const getById = async(id)=>{
 try {
       const response =  await api.get("/blogs/"+id)
       return response;
@@ -56,7 +55,7 @@ try {
 }
 }
 
-async function getAll (){
+export const getAll =async()=>{
     try {
           const response =  await api.get("/blogs/all")
           return response;
@@ -66,12 +65,12 @@ async function getAll (){
     }
 }
 
-module.exports = {
-deleteBlog,
-editBlog,
-getAll,
-getById,
-createBlog
-}
+// export const  {
+// deleteBlog,
+// editBlog,
+// getAll,
+// getById,
+// createBlog
+// }
 
 

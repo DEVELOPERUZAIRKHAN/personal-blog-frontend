@@ -1,6 +1,14 @@
 import styles from "./Create.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+    deleteBlog,
+    editBlog,
+    getAll,
+    getById,
+    createBlog
+    } from "../../api/internal.js"
 export default function Create() {
+    
     const [onBlurFired, setOnBlurFired] = useState(false);
     const [onBlurAuthorFired, setOnBlurAuthorFired] = useState(false);
     const [onBlurDescriptionFired, setOnBlurDescriptionFired] = useState(false);
@@ -20,6 +28,25 @@ export default function Create() {
       description: "",
       author: "",
     });
+
+const postData = async()=>{
+
+    const formData = new FormData()
+    formData.append("title",blog.title);
+    formData.append("content",blog.content)
+    formData.append("description",blog.description)
+    formData.append("author",blog.author)
+    formData.append("file",selectedFile)
+
+ const res=  await createBlog(formData)
+ console.log(res)
+}
+    
+
+    
+   
+    
+
     const validateTitle = (title) => {
 
 
@@ -58,7 +85,7 @@ const validateContent =(content)=>{
 
 const validatePhoto =(photo) =>{
     !photo?setPhotoError("Photo is required"):
-    photo.type!==('image/png'||'image/jpeg'||'image/jpg')?setPhotoError("The file must have to be a valid image"):
+    (photo.type!=='image/png')&&(photo.type!=='image/jpeg')&&(photo.type!=='image/jpg')?setPhotoError("The file must have to be a valid image"):
     photo.size>10*1024*1024?setPhotoError("The image size must not exceed 10MB"):
     setPhotoError("")
 }
@@ -119,16 +146,6 @@ const handlePhotoChange=(e)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
   const handleTitleBlur = () => {
     validateTitle(blog.title);
     setOnBlurFired(true);
@@ -150,7 +167,7 @@ const handlePhotoChange=(e)=>{
   };
 
   const handlePhotoBlur = ()=>{
-    validatePhoto(selectedFile)
+    // validatePhoto(selectedFile)
     setOnBlurPhotoFired(true)
     console.log("Photo blur fired")
   }
@@ -172,7 +189,7 @@ const handlePhotoChange=(e)=>{
           {error.title ? (
             <p className={styles.errormessage}>{error.title}</p>
           ) : (
-            ""
+            <p className={styles.alter}>A</p>
           )}
         </>
 
@@ -188,7 +205,7 @@ const handlePhotoChange=(e)=>{
           {error.author ? (
             <p className={styles.errormessage}>{error.author}</p>
           ) : (
-            ""
+            <p className={styles.alter}>A</p>
           )}
         </>
         <>
@@ -206,7 +223,7 @@ const handlePhotoChange=(e)=>{
         ></textarea>
         {
             error.description?(<p className={styles.errormessage}>
-           {error.description} </p>):""
+           {error.description} </p>):<p className={styles.alter}>A</p>
             
         }
 
@@ -228,7 +245,7 @@ const handlePhotoChange=(e)=>{
         {
             error.content?(
                 <p className={styles.errormessage}>{error.content}</p>
-            ):""
+            ):<p className={styles.alter}>A</p>
         }
         
         </>
@@ -248,9 +265,13 @@ const handlePhotoChange=(e)=>{
 
         <p className={styles.errormessage}>{photoError}</p>
             ):
-            ""
+            <p className={styles.alter}>A</p>
         }
+      <button disabled={error.author||error.content||error.description
+      ||error.title||photoError||!blog.title||!blog.author
+      ||!blog.content||!blog.description||!selectedFile} className={styles.submit} onClick={postData}>Submit Blog</button>
       </div>
+
     </div>
   );
 }

@@ -1,21 +1,29 @@
 .errormessage{
     color: red;
-    font-size: 1.1rem;
-
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    
 }
 .form{
+    font-family: 'Roboto', sans-serif;
     margin: 2rem auto;
     max-width: 900px;
     width: 60%;
 }
 .content{
     display: block;
+    font-family: 'Roboto', sans-serif;
     padding: 1rem 2rem;
     outline: none;
     width: 100%;
     resize: vertical;
+    font-size: 1.1rem;
+    border-radius: 10px;
 }
 .description{
+    border-radius: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
     outline: none;
     width: 100%;
     padding: 1rem 2rem;
@@ -23,14 +31,20 @@
     resize: none;
 }
 .title{
+    font-size: 1.1rem;
     display: block;
+    border-radius: 10px;
     width: 100%;
     outline: none;
+    font-family: 'Roboto', sans-serif;
     padding: 1rem 2rem;
 }
 .author{
     outline: none;
+    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
     padding: 1rem 2rem;
+    border-radius: 10px;
     width: 100%;
     display: block;
 }
@@ -58,3 +72,18 @@
     
 }
 
+.alter{
+    visibility: hidden;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+.submit{
+    background-color: black;
+    color: white;
+    padding: 1rem 2rem;
+
+}
+.submit:disabled{
+    background-color: rgb(59, 59, 59);
+}
