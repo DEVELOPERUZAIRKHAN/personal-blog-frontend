@@ -40,6 +40,19 @@ return (
                 <button className={styles.mainButton}>Read Article</button>
             </div>
             </header>
+
+            <section className={styles.firstSection}>
+                <div className={styles.leftFirst}>
+                    <div className={styles.firstItem}>
+
+                    </div>
+                    <div className={styles.firstItem}>
+                        <img src={`${blogs[0].photo}`} alt="" />
+                        <h3 className={styles.itemHeading}></h3>
+                    </div>
+                </div>
+                <div className={styles.rightFirst}></div>
+            </section>
         </div>
     )
 }
