@@ -4,7 +4,7 @@ import Blog from "./pages/Blog/Blog";
 import BlogDetail from "./pages/BlogDetail/BlogDetail";
 import Create from "./pages/Create/Create";
 import Update from "./pages/Update/Update";
-
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
@@ -18,8 +18,14 @@ function App() {
 
     
       <Route element={
-        <Blog/>
+        <Home/>
       } exact path="/" />
+
+
+    
+      <Route element={
+        <Blog/>
+      } exact path="/blog" />
 
 
 

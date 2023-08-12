@@ -1,10 +1,6 @@
 import styles from "./Create.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-    deleteBlog,
-    editBlog,
-    getAll,
-    getById,
     createBlog
     } from "../../api/internal.js"
 export default function Create() {
@@ -52,7 +48,7 @@ const postData = async()=>{
 
         !title?setError({...error,title:"Title is required"}):
         title.length<5?setError({...error,title:"Title must have atleast 5 characters"}):
-        title.length>50?setError({...error,title:"Title can have 50 characters at most"}):
+        title.length>80?setError({...error,title:"Title can have 80 characters at most"}):
         typeof title !== 'string'?setError({...error,title:"Title must have to be a valid string"}):
         setError({...error,title:""})
 
@@ -70,7 +66,7 @@ const postData = async()=>{
   const validateDescription =(description)=>{
         !description?setError({...error,description:"Description is required"}):
         description.length<50?setError({...error,description:"Description must have atleast 50 characters"}):
-        description.length>150?setError({...error,description:"Description must have atmost 150 characters"}):
+        description.length>200?setError({...error,description:"Description must have atmost 200 characters"}):
         typeof description !== 'string'?setError({...error,description:"Description must have to be a valid string"}):
         setError({...error,description:""})
     };
@@ -271,7 +267,6 @@ const handlePhotoChange=(e)=>{
       ||error.title||photoError||!blog.title||!blog.author
       ||!blog.content||!blog.description||!selectedFile} className={styles.submit} onClick={postData}>Submit Blog</button>
       </div>
-
     </div>
   );
 }
