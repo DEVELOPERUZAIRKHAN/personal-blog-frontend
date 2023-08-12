@@ -5,31 +5,33 @@ export default function Home(){
 const [blogs,setBlogs] = useState([])
     useEffect(() => {
 
-
         (async _ =>{
             try{
-
                 const response =  await getAll()
-                setBlogs(response.data.blogs)
+                    setBlogs(response.data.blogs)
             }
             catch(error){
                 console.log(error)
             }
         })()
       return () => {
-        
+        setBlogs([])
       }
     }, [])
     
-
-
+// console.log(blogs[0].photo)
+if(!blogs[0]){
+return (
+    <div>Loading</div>
+)
+}
 
     return(
         <div className={styles.main}>
-            <header className={styles.header}>
-                <div className={styles.mainPhotoContainer}>
-                    <img className={styles.mainPhoto} src={`${blogs[0].photo}`} alt="" srcset="" />
-                </div>
+            <header style={{background:`url(${blogs[0].photo})`,backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}} className={styles.header}>
+
+            <div className={styles.white}></div>
+        
             <div className={styles.heroBox}>
                 <h1 className={styles.mainHeading}>Time to get your house clean and in order</h1>
                 <p className={styles.mainPara}>
