@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { getAll } from "../../api/internal";
 export default function Home(){
 const [blogs,setBlogs] = useState([])
-const [section, setSection] = useState([])
+const truncateTitle=(title,maxLength)=>{
+    if(title.length>maxLength){
+        return title.slice(0,maxLength-3)+'...';
+    }
+    else{
+        return title
+    }
+}
     useEffect(() => {
 
         (async _ =>{
@@ -57,28 +64,35 @@ return (
                 <div className={styles.leftFirst}>
                     <div className={styles.firstItem}>
                         <img className={styles.leftPhoto} src={`${blogs[1].photo}`} alt="" />
-                        <h3 className={styles.leftHeading}>{blogs[1].title}</h3>
-                        <p className={styles.leftPara}>{blogs[1].description}</p>
+                        <h3 className={styles.leftHeading}>{truncateTitle(blogs[1].title,46)}</h3>
+                        <p className={styles.leftPara}>{truncateTitle(blogs[1].description,70)}</p>
                         <button className={styles.leftButton}>Read Article</button>
                     </div>
                     <div className={styles.firstItem}>
                         <img className={styles.leftPhoto} src={`${blogs[2].photo}`} alt="" />
-                        <h3 className={styles.leftHeading}>{blogs[2].title}</h3>
-                        <p className={styles.leftPara}>{blogs[2].description}</p>
+                        <h3 className={styles.leftHeading}>{truncateTitle(blogs[2].title,46)}</h3>
+                        <p className={styles.leftPara}>{truncateTitle(blogs[2].description,70)}</p>
                         <button className={styles.leftButton}>Read Article</button>
                     </div>
                 </div>
                 <div className={styles.rightFirst}>
                     <div className={styles.rightItem}>
-                        <h3 className={styles.rightHeading}>{blogs[3].title}</h3>
-                        <p className={styles.rightPara}>{blogs[3].description}</p>
+                        <h3 style={{marginTop:'0'}} className={styles.rightHeading}>{truncateTitle(blogs[3].title,60)}</h3>
+                        <p className={styles.rightPara}>{truncateTitle(blogs[3].description,70)}</p>
                         <button className={styles.rightButton}>Read this article</button>
 
                     </div>
             
                     <div className={styles.rightItem}>
-                        <h3 className={styles.rightHeading}>{blogs[5].title}</h3>
-                        <p className={styles.rightPara}>{blogs[5].description}</p>
+                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[4].title,60)}</h3>
+                        <p className={styles.rightPara}>{truncateTitle(blogs[4].description,70)}</p>
+                        <button className={styles.rightButton}>Read this article</button>
+
+                    </div>
+            
+                    <div className={styles.rightItem}>
+                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[5].title,60)}</h3>
+                        <p className={styles.rightPara}>{truncateTitle(blogs[5].description,70)}</p>
                         <button className={styles.rightButton}>Read this article</button>
 
                     </div>
@@ -95,27 +109,27 @@ return (
             }
                     <div className={styles.secondItem}>
                         <img className={styles.secondPhoto} src={`${blogs[6].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{blogs[6].title}</h3>
-                        <p className={styles.secondPara}>{blogs[6].description}</p>
+                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[6].title,56)}</h3>
+                        <p className={styles.secondPara}>{truncateTitle(blogs[6].description,80)}</p>
                         <button className={styles.secondButton}>Read Article</button>
                     </div>
                     <div className={styles.secondItem}>
                         <img className={styles.secondPhoto} src={`${blogs[7].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{blogs[7].title}</h3>
-                        <p className={styles.secondPara}>{blogs[7].description}</p>
+                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[7].title,56)}</h3>
+                        <p className={styles.secondPara}>{truncateTitle(blogs[7].description,80)}</p>
                         <button className={styles.secondButton}>Read Article</button>
                     </div>
                 
                     <div className={styles.secondItem}>
                         <img className={styles.secondPhoto} src={`${blogs[8].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{blogs[8].title}</h3>
-                        <p className={styles.secondPara}>{blogs[8].description}</p>
+                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[8].title,56)}</h3>
+                        <p className={styles.secondPara}>{truncateTitle(blogs[8].description,80)}</p>
                         <button className={styles.secondButton}>Read Article</button>
                     </div>
                     <div className={styles.secondItem}>
                         <img className={styles.secondPhoto} src={`${blogs[9].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{blogs[9].title}</h3>
-                        <p className={styles.secondPara}>{blogs[9].description}</p>
+                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[9].title,56)}</h3>
+                        <p className={styles.secondPara}>{truncateTitle(blogs[9].description,80)}</p>
                         <button className={styles.secondButton}>Read Article</button>
                     </div>
                 </div>
