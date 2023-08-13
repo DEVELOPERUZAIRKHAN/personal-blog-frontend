@@ -5,6 +5,7 @@ import BlogDetail from "./pages/BlogDetail/BlogDetail";
 import Create from "./pages/Create/Create";
 import Update from "./pages/Update/Update";
 import Home from "./pages/Home/Home";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
 
     </Routes>
   </BrowserRouter>
-
+    <Footer/>
     </div>
   );
 }
