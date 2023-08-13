@@ -2,6 +2,10 @@
     width: 100%;
     height: 100%;
 } */
+:root{
+--primary-color:rgb(2,11,39);
+--secondary-color:blueviolet;
+}
 .main{
     margin: 0;
     padding: 0;
@@ -18,46 +22,114 @@
 .white{
     position: absolute;
     width: 100%;
-     height: 100vh;
-     z-index: 2;
+    height: 100vh;
+    z-index: 2;
      background:linear-gradient(rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.61),white);
 }
 
+.container{
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 100vh;
+    /* background-color: blue; */
+    z-index: 5;
+    position: relative;
+    
+}
 .heroBox{
     position: absolute;
-    z-index: 3;
+    z-index: 7;
     top: 50%;
-    left: 20%;
-    transform: translate(-20%,-50%);
+    transform: translate(0,-50%);
     max-width: 1100px;
     margin: 0 auto;
 }
 
-.firstSection{
-    background-color: white;
-    
-}
-
 
 .mainHeading{
-font-size: 3rem;
-margin-bottom: 2rem;
-font-weight: 700;
-color: rgb(2, 11, 39);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+color: var(--primary-color);
 width: 70%;
 }
 .mainPara{
     font-size: 1.3rem;
-    color: rgb(2, 11, 39);
+    color: var(--primary-color);
     margin: 2rem 0;
     width: 70%;
 }
 .mainButton{
-    background-color: rgb(158, 25, 247);
-padding: 2rem 5rem ;
-font-size: 1.3rem;
-color: white;
-border: none;
-outline: none;
+    background-color: var(--secondary-color);
+    padding: 2rem 5rem ;
+    font-size: 1.3rem;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.mainButton:hover{
+    background-color:var(--secondary-color);
 }
 
+
+.firstSection{
+    background-color: white;
+    padding: 5rem 0;
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 2rem;
+    
+}
+.leftFirst{
+    display: flex;
+    gap: 1rem;    
+}
+.leftHeading{
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.leftPara{
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.leftPhoto{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.leftButton{
+    border: 2px solid var(--secondary-color);
+    padding: 1rem 2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+    background-color: white;
+}
+.rightFirst{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rightButton{
+    padding: 1rem 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--secondary-color) ;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    
+
+
+}
