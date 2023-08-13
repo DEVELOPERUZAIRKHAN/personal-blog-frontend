@@ -29,7 +29,16 @@ return (
     return(
         <div className={styles.main}>
             <header style={{background:`url(${blogs[0].photo})`,backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}} className={styles.header}>
+            <div className={styles.navSection}>
+            <div className={styles.navbar}>
 
+                <label className={styles.navLogo}>Devblogs</label>
+                <ul className={styles.mainNav}>
+                    <li className={styles.navItem}>Home</li>
+                    <li className={styles.navItem}>Blogs</li>
+                </ul>
+            </div>            
+            </div>
             <div className={styles.white}></div>
         <div className={styles.container}>
             <div className={styles.heroBox}>
@@ -76,6 +85,55 @@ return (
                         <button className={styles.rightButton}>Read this article</button>
 
                     </div>
+                </div>
+            </section>
+            <section className={styles.centerSection}>
+                <h1 className={styles.centerHeading}>Read more blogs crafted for developers</h1>
+                <button className={styles.centerButton}>View All</button>
+            </section>
+            <section className={styles.secondSection}>
+            <div className={styles.secondContainer}>
+                    <div className={styles.secondItem}>
+                        <img className={styles.secondPhoto} src={`${blogs[0].photo}`} alt="" />
+                        <h3 className={styles.secondHeading}>Time to get your house clean and in order</h3>
+                        <p className={styles.secondPara}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure odio cumque adipisci perspiciatis molestiae fuga corporis aliquam.</p>
+                        <button className={styles.secondButton}>Read Article</button>
+                    </div>
+                    <div className={styles.secondItem}>
+                        <img className={styles.secondPhoto} src={`${blogs[0].photo}`} alt="" />
+                        <h3 className={styles.secondHeading}>Time to get your house clean and in order</h3>
+                        <p className={styles.secondPara}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure odio cumque adipisci perspiciatis molestiae fuga corporis aliquam.</p>
+                        <button className={styles.secondButton}>Read Article</button>
+                    </div>
+                
+                    <div className={styles.secondItem}>
+                        <img className={styles.secondPhoto} src={`${blogs[0].photo}`} alt="" />
+                        <h3 className={styles.secondHeading}>Time to get your house clean and in order</h3>
+                        <p className={styles.secondPara}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure odio cumque adipisci perspiciatis molestiae fuga corporis aliquam.</p>
+                        <button className={styles.secondButton}>Read Article</button>
+                    </div>
+                    <div className={styles.secondItem}>
+                        <img className={styles.secondPhoto} src={`${blogs[0].photo}`} alt="" />
+                        <h3 className={styles.secondHeading}>Time to get your house clean and in order</h3>
+                        <p className={styles.secondPara}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure odio cumque adipisci perspiciatis molestiae fuga corporis aliquam.</p>
+                        <button className={styles.secondButton}>Read Article</button>
+                    </div>
+                </div>
+                
+            </section>
+
+            <section className={styles.lastSection}>
+                <div className={styles.lastText}>
+                    <h3 className={styles.lastHeading}>
+                        Time to get your house cleanand in order
+                    </h3>
+                    <p className={styles.lastPara}>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate similique facilis maxime adipisci quo laborum asperiores dicta vel totam magnam.
+                    </p>
+                    <button className={styles.lastButton}>Read Article</button>
+                </div>
+                <div className={styles.lastPhotoContainer}>
+                    <img className={styles.lastPhoto} src={`${blogs[0].photo}`} alt="" srcset="" />
                 </div>
             </section>
         </div>

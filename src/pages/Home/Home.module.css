@@ -80,12 +80,20 @@ width: 70%;
     max-width: 1100px;
     margin: 0 auto;
     gap: 2rem;
+
+    padding-top: 8rem;
     
 }
 .leftFirst{
     display: flex;
     gap: 1rem;    
+    
 }
+/* .leftItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
 .leftHeading{
     font-size: 2rem;
     color: var(--primary-color);
@@ -93,7 +101,7 @@ width: 70%;
     margin-bottom: 1.5rem;
 }
 .leftPara{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
 
@@ -111,16 +119,18 @@ width: 70%;
     font-weight: 700;
     font-size: 1.2rem;
     background-color: white;
+    margin-top: 2rem;
+    cursor: pointer;
 }
 .rightFirst{
-    width: 60%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .rightButton{
-    padding: 1rem 0;
+    padding: 0rem 0 1rem 0;
     background-color: transparent;
     border: none;
     outline: none;
@@ -129,7 +139,127 @@ width: 70%;
     color: var(--secondary-color);
     font-weight: 600;
     font-size: 1.1rem;
-    
+    cursor: pointer;
+}
+.rightPara{
+margin: .5rem 0;
+}
 
+.rightHeading{
+    color: var(--primary-color);
+margin: .5rem 0;
+}
+.secondSection{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.secondContainer{
+    display: flex;
+    gap: 2rem;    
+    
+}
+.secondItem{}
+.secondPhoto{
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+.secondHeading{
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+}
+.secondPara{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+
+}
+.secondButton{
+    padding: 0rem 0 1rem 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--secondary-color) ;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+
+}
+
+.centerSection{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    align-items: center;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+.centerHeading{
+ 
+    font-size: 2rem;
+    color: var(--primary-color);
+    /* margin-top: 1.5rem; */
+    /* margin-bottom: 1.5rem;    */
+}
+
+.centerButton{
+    border: 2px solid var(--secondary-color);
+    padding: 1rem 2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+    background-color: white;
+    /* margin-top: 2rem; */
+    cursor: pointer;
+   
+}
+
+
+.lastSection{
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5rem 0;
+    gap: 3rem;
+}
+
+.lastText{width: 70%;}
+.lastPhoto{
+width: 100%;
+height: 300px;
+object-fit: cover;
+border-radius: 20px;
+}
+.lastPhotoContainer{
+/* height: 100%; */
+}
+.lastHeading{
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 1.5rem 0;
+    margin-top: 0;
+}
+.lastPara{
+    font-size: 1.3rem;
+    margin: 2rem 0;
+}
+.lastButton{
+    padding: 1.5rem 3rem;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    border: 3px solid var(--secondary-color);
+    background-color: white;
+    /* border/-radius: 10px; */
+    font-weight: 700;
 
 }
