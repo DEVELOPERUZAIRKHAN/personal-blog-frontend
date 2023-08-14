@@ -16,11 +16,15 @@ const truncateTitle=(title,maxLength)=>{
         (async _ =>{
             try{
                 const response =  await getAll()
+
                     setBlogs(response.data.blogs)
             }
             catch(error){
                 console.log(error)
             }
+
+
+
         })()
       return () => {
         setBlogs([])
@@ -105,35 +109,18 @@ return (
             <section className={styles.secondSection}>
             <div className={styles.secondContainer}>
             {
+                    blogs.map((blog,index)=>(
+                    <div className={styles.secondItem}>
+                        <img className={styles.secondPhoto} /*src={`${blog.photo}`}*/ alt="" />
+                        <h3 className={styles.secondHeading}>{truncateTitle(blog.title,56)}</h3>
+                        <p className={styles.secondPara}>{truncateTitle(blog.description,80)}</p>
+                        <button className={styles.secondButton}>Read Article</button>
+                    </div>
 
+                    ))
             }
-                    <div className={styles.secondItem}>
-                        <img className={styles.secondPhoto} src={`${blogs[6].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[6].title,56)}</h3>
-                        <p className={styles.secondPara}>{truncateTitle(blogs[6].description,80)}</p>
-                        <button className={styles.secondButton}>Read Article</button>
-                    </div>
-                    <div className={styles.secondItem}>
-                        <img className={styles.secondPhoto} src={`${blogs[7].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[7].title,56)}</h3>
-                        <p className={styles.secondPara}>{truncateTitle(blogs[7].description,80)}</p>
-                        <button className={styles.secondButton}>Read Article</button>
-                    </div>
-                
-                    <div className={styles.secondItem}>
-                        <img className={styles.secondPhoto} src={`${blogs[8].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[8].title,56)}</h3>
-                        <p className={styles.secondPara}>{truncateTitle(blogs[8].description,80)}</p>
-                        <button className={styles.secondButton}>Read Article</button>
-                    </div>
-                    <div className={styles.secondItem}>
-                        <img className={styles.secondPhoto} src={`${blogs[9].photo}`} alt="" />
-                        <h3 className={styles.secondHeading}>{truncateTitle(blogs[9].title,56)}</h3>
-                        <p className={styles.secondPara}>{truncateTitle(blogs[9].description,80)}</p>
-                        <button className={styles.secondButton}>Read Article</button>
-                    </div>
+                   
                 </div>
-                
             </section>
 
             <section className={styles.lastSection}>

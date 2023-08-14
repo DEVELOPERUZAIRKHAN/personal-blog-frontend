@@ -1,5 +1,6 @@
 import styles from "./Create.module.css";
 import { useState } from "react";
+import Resizer from "react-image-file-resizer";
 import {
     createBlog
     } from "../../api/internal.js"
@@ -38,13 +39,7 @@ const postData = async()=>{
  console.log(res)
 }
     
-
-    
-   
-    
-
     const validateTitle = (title) => {
-
 
         !title?setError({...error,title:"Title is required"}):
         title.length<5?setError({...error,title:"Title must have atleast 5 characters"}):
@@ -126,18 +121,42 @@ if (onBlurContentFired) {
       validateAuthor(e.target.value);
     }
   };
+  
+  
+  const handlePhotoChange=async(e)=>{
+    
+    const uploadedFile = e.target.files[0]
+    console.log(uploadedFile)
+try{
 
-
-
-
-const handlePhotoChange=(e)=>{
-    setSelectedFile(e.target.files[0])
-    console.log(e.target.files[0])
-
-    if(onBlurPhotoFired){
-        validatePhoto(e.target.files[0])
+  Resizer.imageFileResizer(
+    uploadedFile,
+  1200,
+  800,
+  'JPEG',
+  80,
+  0,
+  async (resizedImage)=>{
+    console.log(`loggin the resizedImage`, resizedImage)
+    const resizedFile = new File([resizedImage],uploadedFile.name,{
+      type:uploadedFile.type,
     }
+    
+      )
+      setSelectedFile(resizedFile)
+      console.log(resizedFile)
+      if(onBlurPhotoFired){
+        validatePhoto(e.target.files[0])
+      }
+    },
+    'blob'
+    )
+  }
+  catch(error){
+    console.log('error from uploading ' + error)
+  }
 }
+  
 
 
 
@@ -163,7 +182,6 @@ const handlePhotoChange=(e)=>{
   };
 
   const handlePhotoBlur = ()=>{
-    // validatePhoto(selectedFile)
     setOnBlurPhotoFired(true)
     console.log("Photo blur fired")
   }
@@ -266,6 +284,9 @@ const handlePhotoChange=(e)=>{
       <button disabled={error.author||error.content||error.description
       ||error.title||photoError||!blog.title||!blog.author
       ||!blog.content||!blog.description||!selectedFile} className={styles.submit} onClick={postData}>Submit Blog</button>
+
+        <img style={{width:'300px',height:'300px'}} src={selectedFile?URL.createObjectURL(selectedFile):''} alt="" />
+
       </div>
     </div>
   );
