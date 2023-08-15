@@ -4,6 +4,7 @@ import Resizer from "react-image-file-resizer";
 import {
     createBlog
     } from "../../api/internal.js"
+import Navbar from "../../components/Navbar/Navbar";
 export default function Create() {
     
     const [onBlurFired, setOnBlurFired] = useState(false);
@@ -188,6 +189,7 @@ try{
 
   return (
     <div className={styles.main}>
+    <Navbar/>
       <div className={styles.form}>
       <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
         <>

@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import {useState, useEffect} from "react"
 import { getById } from "../../api/internal"
 import { Link } from "react-router-dom"
+import Navbar from "../../components/Navbar/Navbar"
+import Loader from "../../components/Loader/Loader"
 export default function BlogDetail(){
     const {id} = useParams()
     const options = {
@@ -25,20 +27,18 @@ export default function BlogDetail(){
       }
     }, [])
     if (!data){
-        return (<h1>Loading</h1>)
+        return (<>
+
+            <Navbar/>
+                <div className={styles.loadingContainer}>
+<Loader/>
+                </div>
+        </>
+        )
     }
      return  (
           <div className={styles.main}>
-               <div className={styles.navSection}>
-            <div className={styles.navbar}>
-                <Link className={styles.navLogo} to='/'>Devblogs</Link>
-                <ul className={styles.mainNav}>
-                <Link to= "/" className={styles.navItem}>Home</Link>
-                <Link to='/blog' className={styles.navItem}>Blogs</Link>
-                </ul>
-                <Link to="/create" className={styles.navButton}>Create</Link>
-            </div>            
-            </div>
+    <Navbar/>
 
             <header className={styles.header}>
             <div className={styles.container}>

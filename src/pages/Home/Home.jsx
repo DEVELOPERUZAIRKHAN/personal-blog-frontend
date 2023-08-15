@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getAll } from "../../api/internal";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
+import Loader from "../../components/Loader/Loader";
 export default function Home(){
 const [blogs,setBlogs] = useState([])
 const navigate = useNavigate()
@@ -37,24 +39,20 @@ const truncateTitle=(title,maxLength)=>{
 
 if(!blogs[0]){
 return (
-    <div>Loading</div>
+    <>
+
+    <Navbar/>
+    <div className={styles.loaderContainer}>
+    <Loader/>
+    </div>
+    </>
 )
 }
 
     return(
         <div className={styles.main}>
             <header style={{background:`url(${blogs[0].photo})`,backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}} className={styles.header}>
-            <div className={styles.navSection}>
-            <div className={styles.navbar}>
-
-                <Link to='/' className={styles.navLogo}>Devblogs</Link>
-                <ul className={styles.mainNav}>
-                    <Link to ='/' className={styles.navItem}>Home</Link>
-                    <Link to ='/blog' className={styles.navItem}>Blogs</Link>
-                </ul>
-                <Link to='/create' className={styles.navButton}>Create</Link>
-            </div>            
-            </div>
+    <Navbar/>
             <div className={styles.white}></div>
         <div className={styles.container}>
             <div className={styles.heroBox}>

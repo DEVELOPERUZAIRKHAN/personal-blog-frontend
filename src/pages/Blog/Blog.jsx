@@ -3,6 +3,8 @@ import {getAll} from "../../api/internal.js"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import Navbar from "../../components/Navbar/Navbar"
+import Loader from "../../components/Loader/Loader"
 export default function Blog(){
    const [blogs, setBlogs] = useState([])
     const navigate = useNavigate()
@@ -23,20 +25,20 @@ navigate('/blog/'+id)
       }
     }, [])
     
-    
+if (!blogs[0]){
+return (
+    <>
+        <Navbar/>
+        <div className={styles.loadingContainer}>
+        <Loader/>
+        </div>
+    </>
+)
+}else{
+
     return (
         <div className={styles.main}>
-         <div className={styles.navSection}>
-            <div className={styles.navbar}>
-                <Link className={styles.navLogo}>Devblogs </Link>
-                <ul className={styles.mainNav}>
-                <Link className={styles.navItem} to = '/'>Home</Link>
-                <Link className={styles.navItem} to = '/blogs'>Blogs</Link>
- </ul>
-                <Link to='/create' className={styles.navButton}>Create</Link>
-            </div>            
-            </div>
-           
+           <Navbar/>
             <h1 className={styles.mainHeading}>All Blogs</h1>
             <ul className={styles.blogs}>
                 {
@@ -57,10 +59,12 @@ navigate('/blog/'+id)
                     <img className={styles.lastPhoto} src={`${blog.photo}`} alt="" srcset="" />
                 </div>
             </section>
-                    ))
+                    )
+                    )
                 }
             </ul>
 
         </div>
     )
+}
 }

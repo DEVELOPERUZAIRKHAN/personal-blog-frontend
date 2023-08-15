@@ -6,12 +6,14 @@ import Create from "./pages/Create/Create";
 import Update from "./pages/Update/Update";
 import Home from "./pages/Home/Home";
 import Footer from "./components/Footer/Footer";
+// import Navbar from "./components/Navbar/Navbar";
+
 
 function App() {
-  return (
+  return (<>
+
     <div className={styles.app}>
-
-
+  <div className={styles.main}>
 
   <BrowserRouter>
     <Routes>
@@ -48,8 +50,10 @@ function App() {
 
     </Routes>
   </BrowserRouter>
+  </div>
     <Footer/>
     </div>
+  </>
   );
 }
 
