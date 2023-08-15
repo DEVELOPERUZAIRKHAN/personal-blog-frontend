@@ -109,15 +109,21 @@ return (
             <section className={styles.secondSection}>
             <div className={styles.secondContainer}>
             {
-                    blogs.map((blog,index)=>(
+
+                    blogs.map((blog,index)=>
+                    {
+                        if (index>3){
+                            return ''
+                        }
+                       return (
                     <div className={styles.secondItem}>
-                        <img className={styles.secondPhoto} /*src={`${blog.photo}`}*/ alt="" />
+                        <img className={styles.secondPhoto} src={`${blog.photo}`} alt="" />
                         <h3 className={styles.secondHeading}>{truncateTitle(blog.title,56)}</h3>
                         <p className={styles.secondPara}>{truncateTitle(blog.description,80)}</p>
                         <button className={styles.secondButton}>Read Article</button>
                     </div>
 
-                    ))
+                    )})
             }
                    
                 </div>
