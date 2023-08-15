@@ -2,51 +2,69 @@ import styles from "./BlogDetail.module.css"
 import { useParams } from "react-router-dom"
 import {useState, useEffect} from "react"
 import { getById } from "../../api/internal"
+import { Link } from "react-router-dom"
 export default function BlogDetail(){
-    
     const {id} = useParams()
-    
+    const options = {
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+    }
+    const [data,setData] = useState(null) 
     useEffect(() => {
         
       (async _=>{
 
        const response = await getById(id)
-       console.log(response)
-          
+           console.log(response)
+           setData(response.data.blog)
         }
       )()
 
       return () => {
       }
     }, [])
-    
-
-  
-    return (
-        <div className={styles.main}>
+    if (!data){
+        return (<h1>Loading</h1>)
+    }
+     return  (
+          <div className={styles.main}>
                <div className={styles.navSection}>
             <div className={styles.navbar}>
-
-                <label className={styles.navLogo}>Devblogs</label>
+                <Link className={styles.navLogo} to='/'>Devblogs</Link>
                 <ul className={styles.mainNav}>
-                    <li className={styles.navItem}>Home</li>
-                    <li className={styles.navItem}>Blogs</li>
+                <Link to= "/" className={styles.navItem}>Home</Link>
+                <Link to='/blog' className={styles.navItem}>Blogs</Link>
                 </ul>
-                <button className={styles.navButton}>Create</button>
+                <Link to="/create" className={styles.navButton}>Create</Link>
             </div>            
             </div>
 
             <header className={styles.header}>
-                <h1 className={styles.mainHeading}>Time to get your house clean and in order</h1>
-                <p className={styles.author}>Written by Uzair Khan on 12 Jul, 2023</p>
+            <div className={styles.container}>
+
+                <h1 className={styles.mainHeading}>{data.title}</h1>
+                <p className={styles.author}>Written by {data.author} on { new Date(data.createdAt).toLocaleDateString('en-US',options)}</p>
                 <p className={styles.description}>
-                Discover essential image optimization techniques for blazing-fast websites. Boost performance without sacrificing visual appeal!
+                {data.description}
                 </p>
+            </div>
             </header>
+            <div className={styles.container}>
+
             <div className={styles.photoCover}>
-                {/* <img className={styles.photo} src={photo} alt="" /> */}
+                <img className={styles.photo} src={data.photo} alt="" />
             </div>
           
+            </div>
+            <div className={styles.container}>
+                <p className={styles.content}>
+                    {
+                        data.content
+                    }
+                </p>
+            </div>
         </div>
     )
+
 }

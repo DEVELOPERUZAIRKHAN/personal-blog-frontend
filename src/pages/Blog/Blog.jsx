@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 export default function Blog(){
    const [blogs, setBlogs] = useState([])
-
-//    const handleClick = (id) =>{ 
-
-
-//    }
+    const navigate = useNavigate()
+   const handleClick = (id) =>{ 
+navigate('/blog/'+id)
+   }
     useEffect(() => {
         (async()=>{
           const response =  await getAll()
@@ -29,13 +28,12 @@ export default function Blog(){
         <div className={styles.main}>
          <div className={styles.navSection}>
             <div className={styles.navbar}>
-
-                <label className={styles.navLogo}>Devblogs</label>
+                <Link className={styles.navLogo}>Devblogs </Link>
                 <ul className={styles.mainNav}>
-                    <li className={styles.navItem}>Home</li>
-                    <li className={styles.navItem}>Blogs</li>
-                </ul>
-                <button className={styles.navButton}>Create</button>
+                <Link className={styles.navItem} to = '/'>Home</Link>
+                <Link className={styles.navItem} to = '/blogs'>Blogs</Link>
+ </ul>
+                <Link to='/create' className={styles.navButton}>Create</Link>
             </div>            
             </div>
            
@@ -51,12 +49,9 @@ export default function Blog(){
                     <p className={styles.lastPara}>
                         {blog.description}
                     </p>
-                    {/* <button onClick={_=>handleClick(blog._id)} className={styles.lastButton}> */}
-                    <Link to={'/blog/'+blog._id}>
-                     Read Article
-                    </Link>
-            
-                    {/* </button> */}
+                    <button onClick={_=>handleClick(blog._id)} className={styles.lastButton}>
+                Read Article
+                    </button>
                 </div>
                 <div className={styles.lastPhotoContainer}>
                     <img className={styles.lastPhoto} src={`${blog.photo}`} alt="" srcset="" />
