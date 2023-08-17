@@ -215,7 +215,7 @@ export default function Create() {
     else if(field==='author'){ validateAuthor(blog.author)}
     else if(field==='description'){ validateDescription(blog.description)}
   };
-
+                   
   if (submitted) {
     setTimeout(() => {
       setSubmitted(false);
