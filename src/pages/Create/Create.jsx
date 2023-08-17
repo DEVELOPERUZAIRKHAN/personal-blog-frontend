@@ -11,7 +11,6 @@ export default function Create() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [resizedImage, setResizedImage] = useState(null);
   const [blurFlag, setBlurFlag] = useState({
     author: false,
     description: false,
@@ -44,7 +43,7 @@ export default function Create() {
     formData.append("content", blog.content);
     formData.append("description", blog.description);
     formData.append("author", blog.author);
-    formData.append("file", resizedImage);
+    formData.append("file", selectedFile);
 
     const response = await createBlog(formData);
     setSubmitting(false);
@@ -78,7 +77,6 @@ export default function Create() {
       photo: false,
     });
     setSelectedFile(null);
-    setResizedImage(null);
   };
 
   const validateTitle = (title) => {
@@ -160,36 +158,29 @@ export default function Create() {
       setError({...error,photo:''})
       return true;
     }
-      
   };
 
   const handleTitleChange = (e) => {
     setBlog({
       ...blog,
-      title: e.target.value,
+    title: e.target.value,
     });
-
-    if (blurFlag.title) {
       validateTitle(e.target.value);
-    }
+    
   };
   const handleDescriptionChange = (e) => {
     setBlog({
       ...blog,
       description: e.target.value,
     });
-    if (blurFlag.description) {
       validateDescription(e.target.value);
-    }
   };
   const handleContentChange = (e) => {
     setBlog({
       ...blog,
       content: e.target.value,
     });
-    if (blurFlag.content) {
       validateContent(e.target.value);
-    }
   };
   const handleAuthorChange = (e) => {
     setBlog({
