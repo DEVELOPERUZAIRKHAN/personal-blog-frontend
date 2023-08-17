@@ -1,12 +1,38 @@
 import styles from "./Update.module.css";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { TailSpin } from "react-loader-spinner";
-import { createBlog } from "../../api/internal.js";
+import { editBlog,getById } from "../../api/internal.js";
 import { resizePhoto } from "./resizer";
 import { BiSolidCheckCircle } from "react-icons/bi";
 import Navbar from "../../components/Navbar/Navbar";
+import { useParams } from "react-router-dom";
 export default function Update() {
   /*********THE STATES**********/
+   const {id} = useParams()
+
+   useEffect(() => {
+    let response ;
+    (async _=>{
+      try {
+        const  innerResponse = await getById(id)
+        console.log(innerResponse)
+        response = innerResponse.data.blog;
+        
+      } catch (error) {
+       return console.log('error from getting the blog', error)
+      }
+    })()
+
+    
+
+     
+   
+     return () => {
+       
+     }
+   }, [])
+   
+
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -45,7 +71,7 @@ export default function Update() {
     formData.append("file", selectedFile);
 let response;
 try{
-   response = await createBlog(formData);
+  //  response = await createBlog(formData);
   setSubmitting(false);
   console.log(response);
   if (response.status === 201) {

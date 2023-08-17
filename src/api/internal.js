@@ -32,11 +32,11 @@ export const deleteBlog=async(id)=>{
 }
 
 
-export const editBlog=async(id)=>{
+export const editBlog=async(id,data)=>{
     try {
-            const response = await api.put("/blogs/"+id)
+            const response = await api.put("/blogs/"+id,data)
             return response;
-    } catch (error) {
+    } catch (error) { 
         console.log(`error in the editing api`)
         console.log(error)
     }

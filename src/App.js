@@ -34,7 +34,7 @@ function App() {
 
       <Route element={
         <Update/>
-      } exact path="/update" />
+      } exact path="/blog/:id/update" />
  
  
       <Route element={

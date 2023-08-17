@@ -1,11 +1,11 @@
 import styles from "./BlogDetail.module.css"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import {useState, useEffect} from "react"
 import { getById } from "../../api/internal"
-import { Link } from "react-router-dom"
 import Navbar from "../../components/Navbar/Navbar"
 import Loader from "../../components/Loader/Loader"
 export default function BlogDetail(){
+    const navigate = useNavigate()
     const {id} = useParams()
     const options = {
         year:'numeric',
@@ -63,6 +63,10 @@ export default function BlogDetail(){
                         data.content
                     }
                 </p>
+            </div>
+            <div className={styles.container}>
+                <button onClick={_=>navigate('/blog/'+id+'/update')} className={styles.edit}>Edit</button>
+                <button className={styles.delete}>Delete</button>
             </div>
         </div>
     )
