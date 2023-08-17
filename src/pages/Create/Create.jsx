@@ -37,125 +37,180 @@ export default function Create() {
 
 
   const postData = async () => {
-    setSubmitting(true);
     const formData = new FormData();
     formData.append("title", blog.title);
     formData.append("content", blog.content);
     formData.append("description", blog.description);
     formData.append("author", blog.author);
     formData.append("file", selectedFile);
+let response;
+try{
+   response = await createBlog(formData);
+  setSubmitting(false);
+  console.log(response);
+  if (response.status === 201) {
+    setSubmitted(true);
+  }
 
-    const response = await createBlog(formData);
-    setSubmitting(false);
-    console.log(response);
+}
+catch(error){
+  console.log('error submitting blog',error)
+}
+finally{
+  if (fileInputRef.current) {
+    fileInputRef.current.value = null;
+  }
+  setBlog({
+    title: "",
+    content: "",
+    description: "",
+    author: "",
+  });
+  
+  setError({
+    title: "",
+    content: "",
+    description: "",
+    author: "",
+    photo:""
+  });
+  setBlurFlag({
+    author: false,
+    title: false,
+    content: false,
+    description: false,
+    photo: false,
+  });
+  setSelectedFile(null);
 
-    if (response.status === 201) {
-      setSubmitted(true);
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null;
-    }
-    setBlog({
-      title: "",
-      content: "",
-      description: "",
-      author: "",
-    });
-    
-    setError({
-      title: "",
-      content: "",
-      description: "",
-      author: "",
-      photo:""
-    });
-    setBlurFlag({
-      author: false,
-      title: false,
-      content: false,
-      description: false,
-      photo: false,
-    });
-    setSelectedFile(null);
+}
+
   };
 
   const validateTitle = (title) => {
-    !title
-      ? setError({ ...error, title: "Title is required" })
-      : title.length < 5
-      ? setError({ ...error, title: "Title must have atleast 5 characters" })
-      : title.length > 80
-      ? setError({ ...error, title: "Title can have 80 characters at most" })
-      : typeof title !== "string"
-      ? setError({ ...error, title: "Title must have to be a valid string" })
-      : setError({ ...error, title: "" });
+console.log( 'title validating')
+if(!title){
+  setError((prevError)=>({...prevError,title:'Title is required '}))
+      return false;
+    }
+    else if(title.length<5){
+      setError((prevError)=>({...prevError,title:"Title must have atleast 5 characters"}))
+      return false
+    }
+    else if(title.length>80){
+      setError((prevError)=>({...prevError,title:'Title must not exceed 80 characters'}))
+      return false
+    }
+    else if(typeof title!=='string'){
+      setError((prevError)=>({...prevError,title:"Title must have to be a valid string"}))
+      return false
+    }
+    else{
+      setError((prevError)=>({...prevError,title:""}))
+      return true
+    }
   };
 
   const validateAuthor = (author) => {
-    !author
-      ? setError({ ...error, author: "Author is required" })
-      : author.length < 5
-      ? setError({ ...error, author: "Author must have atleast 5 characters" })
-      : author.length > 30
-      ? setError({ ...error, author: "Author cam have 30 characters at most" })
-      : typeof author !== "string"
-      ? setError({ ...error, author: "Author must have to be a valid string" })
-      : setError({ ...error, author: "" });
-  };
+  console.log( 'author validating')
+  
+  if(!author){
+       setError((prevError)=>({ ...prevError, author: "Author is required" }))
+       return false;
 
+    }
+    else if(author.length<5){
+      
+      setError(prevError=>({ ...prevError, author: "Author must have atleast 5 characters" }))
+      return false;
+    }
+    else if( author.length>30){
+       setError(prevError=>({ ...prevError, author: "Author cam have 30 characters at most" }))
+       return false;
+
+    }
+    else if(typeof author !== 'string'){
+      setError(prevError=>({ ...prevError, author: "Author must have to be a valid string" }))
+      return false
+      
+    }
+    else {
+      setError(prevError=>({...prevError,author:''}))
+      return true
+    }
+
+  };
+  
   const validateDescription = (description) => {
-    !description
-      ? setError({ ...error, description: "Description is required" })
-      : description.length < 50
-      ? setError({
-          ...error,
-          description: "Description must have atleast 50 characters",
-        })
-      : description.length > 200
-      ? setError({
-          ...error,
-          description: "Description must have atmost 200 characters",
-        })
-      : typeof description !== "string"
-      ? setError({
-          ...error,
-          description: "Description must have to be a valid string",
-        })
-      : setError({ ...error, description: "" });
+    console.log( 'description validating')
+    if(!description){
+      setError(prevError=>({ ...prevError, description: "Description is required" }))
+       return false
+    }
+    else if(description.length<50){
+      setError(prevError=>({
+  ...prevError,
+        description: "Description must have atleast 50 characters",
+      }))
+    return false
+    }
+    else if(description.length>200){
+      setError(prevError=>({
+  ...prevError,
+        description: "Description must have atmost 200 characters",
+      }))
+      return false;
+    }
+    else if(typeof description !== 'string'){
+      setError(prevError=>({
+  ...prevError,
+        description: "Description must have to be a valid string",
+      }))
+      return false
+    }
+    else{
+      setError(prevError=>({ ...prevError, description: "" }));
+      return true
+    }
   };
-
+  
   const validateContent = (content) => {
-    !content
-      ? setError({ ...error, content: "Content is required" })
-      : content.length < 50
-      ? setError({
-          ...error,
-          content: "Content must have atleast 50 characters",
-        })
-      : typeof content !== "string"
-      ? setError({
-          ...error,
-          content: "Content must have to be a valid string",
-        })
-      : setError({ ...error, content: "" });
+    console.log( 'content validating')
+    if(!content){
+      setError(prevError=>({ ...prevError, content: "Content is required" }))
+      return false;
+    }
+    else if(content.length<50){
+      setError(prevError=>({
+  ...prevError,
+        content: "Content must have atleast 50 characters",
+      }))
+      return false
+    }
+    else{
+      setError(prevError=>({...prevError,content:''}))
+      return true
+    }
+
   };
 
   const validatePhoto = (photo) => {
     console.log("photo validation starts");
+    
 
-    if(!photo){setError({...error,photo:"Photo is required"})
+    if(!photo){setError(prevError=>({...prevError,photo:"Photo is required"}))
     return false
   }
     else if(photo.type!== 'image/png'&&photo.type!=='image/jpeg'&&photo.type!=='image/jpeg'){
-      setError({...error,photo:"The file must have to be a valid image"})
+      setError(prevError=>({...prevError,photo:"The file must have to be a valid image"}))
       return false
     }
     else if(photo.size>10*1024*1024){
-      setError({...error,photo:"The image size must not exceed 10MB"})
+      setError(prevError=>({...prevError,photo:"The image size must not exceed 10MB"}))
       return false
     }
     else{
-      setError({...error,photo:''})
+      setError(prevError=>({...prevError,photo:''}))
       return true;
     }
   };
@@ -190,11 +245,22 @@ export default function Create() {
       validateAuthor(e.target.value);
   };
 
-  const handlePhotoChange = (e) => {
+  const handlePhotoChange =async (e) => {
     const uploadedFile = e.target.files[0];
    const response = validatePhoto(uploadedFile);
         if(response){
-          setSelectedFile(resizePhoto(uploadedFile))
+          try{
+            const resized =  await resizePhoto(uploadedFile)
+            console.log(resized ,'The resized in change')
+            setSelectedFile(resized)
+
+          }
+          catch(error){
+            console.log("error resizing the image",error)
+          }
+        }
+        else{
+          setSelectedFile(null)
         }
   };
 
@@ -320,22 +386,20 @@ export default function Create() {
         ) : (
           <p className={styles.alter}>A</p>
         )}
-        <button
-          disabled={
-            submitting ||
-            error.author ||
-            error.content ||
-            error.description ||
-            error.title ||
-            error.photo ||
-            !blog.title ||
-            !blog.author ||
-            !blog.content ||
-            !blog.description ||
-            !selectedFile
-          }
+        <button 
+        disabled={submitting}
           className={styles.submit}
-          onClick={postData}
+          onClick={ _=>{
+           const titleRes = validateTitle(blog.title)
+           const authorRes =  validateAuthor(blog.author)
+           const descriptionRes = validateDescription(blog.description)
+           const contentRes = validateContent(blog.content)
+           const photoRes =  validatePhoto(selectedFile)
+            if(photoRes&&titleRes&&authorRes&&descriptionRes&&contentRes&&blog.title&&blog.author&&blog.content&&blog.description&&selectedFile){
+            setSubmitting(true)
+            postData()
+            }
+            }}
         >
           {submitting ? "Submitting" : "Submit Blog"}
           <TailSpin
