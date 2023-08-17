@@ -4,15 +4,9 @@
   box-sizing: border-box;
 }
 ::-webkit-scrollbar{
-
-  /* position: absolute; */
-  display: none;
-/* right: 0; */
+display: none;
 }
+
 .main{
   min-height: 87vh;
-  /* position: relative; */
-  /* position:absolute; */
-  /* left: 0; */
-  /* top:0 */
 }

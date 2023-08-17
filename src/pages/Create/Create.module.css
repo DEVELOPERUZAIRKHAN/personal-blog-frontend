@@ -1,8 +1,22 @@
+
+
+:root{
+    --primary-color:#080B5F;
+    --secondary-color:#8447FA;
+    --primary-color-dis:#5d5e8a;
+    }
 .errormessage{
     color: red;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     
+}
+.mainHeading{
+    font-size: 3rem;
+    text-align: center;
+    margin: 3rem 0;
+    color: var(--primary-color);
+
 }
 .form{
     font-family: 'Roboto', sans-serif;
@@ -19,12 +33,20 @@
     resize: vertical;
     font-size: 1.1rem;
     border-radius: 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(243, 243, 243);
+    border: none;
+    margin: 1rem 0;
 }
 .description{
+    background-color: rgb(243, 243, 243);
+    margin: 1rem 0;
     border-radius: 10px;
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
     outline: none;
+    border: none;
     width: 100%;
     padding: 1rem 2rem;
     display: block;
@@ -32,27 +54,34 @@
 }
 .title{
     font-size: 1.1rem;
+    background-color: rgb(243, 243, 243);
     display: block;
     border-radius: 10px;
     width: 100%;
     outline: none;
     font-family: 'Roboto', sans-serif;
     padding: 1rem 2rem;
+    border: none;
+    margin: 1rem 0;
 }
 .author{
     outline: none;
+    background-color: rgb(243, 243, 243);
     font-size: 1.1rem;
     font-family: 'Roboto', sans-serif;
     padding: 1rem 2rem;
     border-radius: 10px;
     width: 100%;
     display: block;
+    border: none;
+    margin: 1rem 0;
 }
 
 .photo{
     background-color: blue;
     cursor: pointer;
     display: none;
+    
 }
 
 .photoCover{
@@ -64,7 +93,7 @@
 }
 
 .photoLabel{
-    background-color: blueviolet;
+    background-color: var(--secondary-color);
     color: white;
     padding: 1rem 2rem;
     font-size: 1.1rem;
@@ -79,11 +108,37 @@
 }
 
 .submit{
-    background-color: black;
+    background-color:var(--primary-color);
     color: white;
-    padding: 1rem 2rem;
+    padding: 2rem 4rem;
+    width: 100%;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 
 }
 .submit:disabled{
-    background-color: rgb(59, 59, 59);
+    background-color:var(--primary-color-dis);
+}
+
+
+.submitted{
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 2rem;
+margin: 2rem 0;
+}
+.submittedIcon{
+    color: var(--primary-color);
+    font-size: 2rem;
+    
+}
+.submittedText{
+    font-size: 2rem;
+color: var(--primary-color);
+font-weight: 700;
 }

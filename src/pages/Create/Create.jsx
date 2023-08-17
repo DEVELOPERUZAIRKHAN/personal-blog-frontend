@@ -1,88 +1,168 @@
 import styles from "./Create.module.css";
-import { useState } from "react";
-import Resizer from "react-image-file-resizer";
-import {
-    createBlog
-    } from "../../api/internal.js"
+import { useState, useRef } from "react";
+import { TailSpin } from "react-loader-spinner";
+import { createBlog } from "../../api/internal.js";
+import { resizePhoto } from "./resizer";
+import { BiSolidCheckCircle } from "react-icons/bi";
 import Navbar from "../../components/Navbar/Navbar";
 export default function Create() {
-    
-    const [onBlurFired, setOnBlurFired] = useState(false);
-    const [onBlurAuthorFired, setOnBlurAuthorFired] = useState(false);
-    const [onBlurDescriptionFired, setOnBlurDescriptionFired] = useState(false);
-    const [onBlurContentFired, setOnBlurContentFired] = useState(false);
-    const [onBlurPhotoFired, setOnBlurPhotoFired] = useState(false)
-    const [selectedFile, setSelectedFile] = useState(null)
-    const [photoError,setPhotoError] = useState("")
-    const [error, setError] = useState({
+  /*********THE STATES**********/
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [resizedImage, setResizedImage] = useState(null);
+  const [photoFocus, setPhotoFocus] = useState(false)
+  const [blurFlag, setBlurFlag] = useState({
+    author: false,
+    description: false,
+    title: false,
+    content: false,
+    photo: false,
+  });
+  const [error, setError] = useState({
+    title: "",
+    content: "",
+    author: "",
+    description: "",
+    photo:""
+  });
+  
+  const [blog, setBlog] = useState({
+    title: "",
+    content: "",
+    description: "",
+    author: "",
+  });
+  
+  /*********THE STATES**********/
+
+
+  const postData = async () => {
+    setSubmitting(true);
+    const formData = new FormData();
+    formData.append("title", blog.title);
+    formData.append("content", blog.content);
+    formData.append("description", blog.description);
+    formData.append("author", blog.author);
+    formData.append("file", resizedImage);
+
+    const response = await createBlog(formData);
+    setSubmitting(false);
+    console.log(response);
+
+    if (response.status === 201) {
+      setSubmitted(true);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+    setBlog({
       title: "",
       content: "",
-      author: "",
       description: "",
+      author: "",
     });
-    const [blog, setBlog] = useState({
+    
+    setError({
       title: "",
       content: "",
       description: "",
       author: "",
+      photo:""
     });
+    setBlurFlag({
+      author: false,
+      title: false,
+      content: false,
+      description: false,
+      photo: false,
+    });
+    setSelectedFile(null);
+    setResizedImage(null);
+  };
 
-const postData = async()=>{
-
-    const formData = new FormData()
-    formData.append("title",blog.title);
-    formData.append("content",blog.content)
-    formData.append("description",blog.description)
-    formData.append("author",blog.author)
-    formData.append("file",selectedFile)
-
- const res=  await createBlog(formData)
- console.log(res)
-}
-    
-    const validateTitle = (title) => {
-
-        !title?setError({...error,title:"Title is required"}):
-        title.length<5?setError({...error,title:"Title must have atleast 5 characters"}):
-        title.length>80?setError({...error,title:"Title can have 80 characters at most"}):
-        typeof title !== 'string'?setError({...error,title:"Title must have to be a valid string"}):
-        setError({...error,title:""})
-
+  const validateTitle = (title) => {
+    !title
+      ? setError({ ...error, title: "Title is required" })
+      : title.length < 5
+      ? setError({ ...error, title: "Title must have atleast 5 characters" })
+      : title.length > 80
+      ? setError({ ...error, title: "Title can have 80 characters at most" })
+      : typeof title !== "string"
+      ? setError({ ...error, title: "Title must have to be a valid string" })
+      : setError({ ...error, title: "" });
   };
 
   const validateAuthor = (author) => {
-    !author?setError({...error,author:"Author is required"}):
-    author.length<5?setError({...error,author:"Author must have atleast 5 characters"}):
-    author.length>30?setError({...error,author:"Author cam have 30 characters at most"}):
-    typeof author !=='string'?setError({...error,author:"Author must have to be a valid string"}):
-    setError({...error,author:""})
+    !author
+      ? setError({ ...error, author: "Author is required" })
+      : author.length < 5
+      ? setError({ ...error, author: "Author must have atleast 5 characters" })
+      : author.length > 30
+      ? setError({ ...error, author: "Author cam have 30 characters at most" })
+      : typeof author !== "string"
+      ? setError({ ...error, author: "Author must have to be a valid string" })
+      : setError({ ...error, author: "" });
   };
 
+  const validateDescription = (description) => {
+    !description
+      ? setError({ ...error, description: "Description is required" })
+      : description.length < 50
+      ? setError({
+          ...error,
+          description: "Description must have atleast 50 characters",
+        })
+      : description.length > 200
+      ? setError({
+          ...error,
+          description: "Description must have atmost 200 characters",
+        })
+      : typeof description !== "string"
+      ? setError({
+          ...error,
+          description: "Description must have to be a valid string",
+        })
+      : setError({ ...error, description: "" });
+  };
 
-  const validateDescription =(description)=>{
-        !description?setError({...error,description:"Description is required"}):
-        description.length<50?setError({...error,description:"Description must have atleast 50 characters"}):
-        description.length>200?setError({...error,description:"Description must have atmost 200 characters"}):
-        typeof description !== 'string'?setError({...error,description:"Description must have to be a valid string"}):
-        setError({...error,description:""})
-    };
+  const validateContent = (content) => {
+    !content
+      ? setError({ ...error, content: "Content is required" })
+      : content.length < 50
+      ? setError({
+          ...error,
+          content: "Content must have atleast 50 characters",
+        })
+      : typeof content !== "string"
+      ? setError({
+          ...error,
+          content: "Content must have to be a valid string",
+        })
+      : setError({ ...error, content: "" });
+  };
 
-const validateContent =(content)=>{
-    !content?setError({...error,content:"Content is required"}):
-    content.length<50?setError({...error,content:"Content must have atleast 50 characters"}):
-    typeof content !== 'string' ? setError({...error,content:"Content must have to be a valid string"}):
-    setError({...error,content:""})
-}
+  const validatePhoto = (photo) => {
+    console.log("photo validation starts");
 
-
-const validatePhoto =(photo) =>{
-    !photo?setPhotoError("Photo is required"):
-    (photo.type!=='image/png')&&(photo.type!=='image/jpeg')&&(photo.type!=='image/jpg')?setPhotoError("The file must have to be a valid image"):
-    photo.size>10*1024*1024?setPhotoError("The image size must not exceed 10MB"):
-    setPhotoError("")
-}
-    
-
+    if(!photo){setError({...error,photo:"Photo is required"})
+    return false
+  }
+    else if(photo.type!== 'image/png'&&photo.type!=='image/jpeg'&&photo.type!=='image/jpeg'){
+      setError({...error,photo:"The file must have to be a valid image"})
+      return false
+    }
+    else if(photo.size>10*1024*1024){
+      setError({...error,photo:"The image size must not exceed 10MB"})
+      return false
+    }
+    else{
+      setError({...error,photo:''})
+      return true;
+    }
+      
+  };
 
   const handleTitleChange = (e) => {
     setBlog({
@@ -90,7 +170,7 @@ const validatePhoto =(photo) =>{
       title: e.target.value,
     });
 
-    if (onBlurFired) {
+    if (blurFlag.title) {
       validateTitle(e.target.value);
     }
   };
@@ -99,8 +179,8 @@ const validatePhoto =(photo) =>{
       ...blog,
       description: e.target.value,
     });
-    if(onBlurDescriptionFired){
-        validateDescription(e.target.value)
+    if (blurFlag.description) {
+      validateDescription(e.target.value);
     }
   };
   const handleContentChange = (e) => {
@@ -108,93 +188,48 @@ const validatePhoto =(photo) =>{
       ...blog,
       content: e.target.value,
     });
-if (onBlurContentFired) {
-    validateContent(e.target.value)
-}
-
+    if (blurFlag.content) {
+      validateContent(e.target.value);
+    }
   };
   const handleAuthorChange = (e) => {
     setBlog({
       ...blog,
       author: e.target.value,
     });
-    if (onBlurAuthorFired) {
       validateAuthor(e.target.value);
-    }
   };
-  
-  
-  const handlePhotoChange=async(e)=>{
-    
-    const uploadedFile = e.target.files[0]
-    console.log(uploadedFile)
-try{
 
-  Resizer.imageFileResizer(
-    uploadedFile,
-  1200,
-  800,
-  'JPEG',
-  80,
-  0,
-  async (resizedImage)=>{
-    console.log(`loggin the resizedImage`, resizedImage)
-    const resizedFile = new File([resizedImage],uploadedFile.name,{
-      type:uploadedFile.type,
-    }
-    
-      )
-      setSelectedFile(resizedFile)
-      console.log(resizedFile)
-      if(onBlurPhotoFired){
-        validatePhoto(e.target.files[0])
-      }
-    },
-    'blob'
-    )
+  const handlePhotoChange = (e) => {
+    const uploadedFile = e.target.files[0];
+   const response = validatePhoto(uploadedFile);
+        if(response){
+          setSelectedFile(resizePhoto(uploadedFile))
+        }
+  };
+
+  const handleBlurFlag = (field) => {
+    setBlurFlag((prevState) => ({ ...blurFlag, [field]: true }));
+    if(field==='title'){ validateTitle(blog.title)}
+    else if(field==='content'){ validateContent(blog.content)}
+    else if(field==='author'){ validateAuthor(blog.author)}
+    else if(field==='description'){ validateDescription(blog.description)}
+  };
+
+  if (submitted) {
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 2000);
   }
-  catch(error){
-    console.log('error from uploading ' + error)
-  }
-}
-  
-
-
-
-
-  const handleTitleBlur = () => {
-    validateTitle(blog.title);
-    setOnBlurFired(true);
-  };
-
-  const handleDescriptionBlur = () => {
-      validateDescription(blog.description);
-      setOnBlurDescriptionFired(true);
-  };
-
-  const handleAuthorBlur = () => {
-    validateAuthor(blog.author);
-    setOnBlurAuthorFired(true);
-  };
-
-  const handleContentBlur = () => {
-    validateContent(blog.content);
-    setOnBlurContentFired(true)
-  };
-
-  const handlePhotoBlur = ()=>{
-    setOnBlurPhotoFired(true)
-    console.log("Photo blur fired")
-  }
-
   return (
     <div className={styles.main}>
-    <Navbar/>
+      <Navbar />
       <div className={styles.form}>
-      <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
+        <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
         <>
           <input
-            onBlur={handleTitleBlur}
+            disabled={submitting}
+            onBlur={() => handleBlurFlag("title")}
             value={blog.title}
             onChange={handleTitleChange}
             className={styles.title}
@@ -211,7 +246,8 @@ try{
 
         <>
           <input
-            onBlur={handleAuthorBlur}
+            disabled={submitting}
+            onBlur={(_) => handleBlurFlag("author")}
             value={blog.author}
             onChange={handleAuthorChange}
             className={styles.author}
@@ -225,70 +261,113 @@ try{
           )}
         </>
         <>
-
-        <textarea
-          onBlur={handleDescriptionBlur}
-          value={blog.description}
-          onChange={handleDescriptionChange}
-          className={styles.description}
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          placeholder="Enter description here"
-        ></textarea>
-        {
-            error.description?(<p className={styles.errormessage}>
-           {error.description} </p>):<p className={styles.alter}>A</p>
-            
-        }
-
+          <textarea
+            disabled={submitting}
+            onBlur={(_) => handleBlurFlag("description")}
+            value={blog.description}
+            onChange={handleDescriptionChange}
+            className={styles.description}
+            name=""
+            id=""
+            cols="30"
+            rows="3"
+            placeholder="Enter description here"
+          ></textarea>
+          {error.description ? (
+            <p className={styles.errormessage}>{error.description} </p>
+          ) : (
+            <p className={styles.alter}>A</p>
+          )}
         </>
 
         <>
-
-        <textarea
-          onBlur={handleContentBlur}
-          value={blog.content}
-          onChange={handleContentChange}
-          className={styles.content}
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          placeholder="Enter your content here"
-        ></textarea>
-        {
-            error.content?(
-                <p className={styles.errormessage}>{error.content}</p>
-            ):<p className={styles.alter}>A</p>
-        }
-        
+          <textarea
+            disabled={submitting}
+            onBlur={(_) => handleBlurFlag("content")}
+            value={blog.content}
+            onChange={handleContentChange}
+            className={styles.content}
+            name=""
+            id=""
+            cols="30"
+            rows="15"
+            placeholder="Enter your content here"
+          ></textarea>
+          {error.content ? (
+            <p className={styles.errormessage}>{error.content}</p>
+          ) : (
+            <p className={styles.alter}>A</p>
+          )}
         </>
 
         <div className={styles.photoCover}>
-        <label tabIndex={0} onBlur={handlePhotoBlur} className={styles.photoLabel} htmlFor="inputfile">Choose a photo</label>
-        <input  className={styles.photo} type="file" onChange={handlePhotoChange} name="inputfile" id="inputfile" />
-       
-       {selectedFile?(
+          <label
+            disabled={submitting}
+            tabIndex={0}
+            className={styles.photoLabel}
+            htmlFor="inputfile"
+          >
+            Choose a photo
+          </label>
+          <input
+            ref={fileInputRef}
+            disabled={submitting}
+            className={styles.photo}
+            type="file"
+            onChange={handlePhotoChange}
+            name="inputfile"
+            id="inputfile"
+          />
 
-        <p className={styles.photoInfo}>{selectedFile.name}</p>
-       ):<p className={styles.photoInfo}>No File Choosen</p>
-
-       }
-        </div>{
-            photoError?(
-
-        <p className={styles.errormessage}>{photoError}</p>
-            ):
-            <p className={styles.alter}>A</p>
-        }
-      <button disabled={error.author||error.content||error.description
-      ||error.title||photoError||!blog.title||!blog.author
-      ||!blog.content||!blog.description||!selectedFile} className={styles.submit} onClick={postData}>Submit Blog</button>
-
-        <img style={{width:'300px',height:'300px'}} src={selectedFile?URL.createObjectURL(selectedFile):''} alt="" />
-
+          {selectedFile ? (
+            <p className={styles.photoInfo}>{selectedFile.name}</p>
+          ) : (
+            <p className={styles.photoInfo}>No File Choosen</p>
+          )}
+        </div>
+        {error.photo ? (
+          <p className={styles.errormessage}>{error.photo}</p>
+        ) : (
+          <p className={styles.alter}>A</p>
+        )}
+        <button
+          disabled={
+            submitting ||
+            error.author ||
+            error.content ||
+            error.description ||
+            error.title ||
+            error.photo ||
+            !blog.title ||
+            !blog.author ||
+            !blog.content ||
+            !blog.description ||
+            !selectedFile
+          }
+          className={styles.submit}
+          onClick={postData}
+        >
+          {submitting ? "Submitting" : "Submit Blog"}
+          <TailSpin
+            height="30"
+            width="30"
+            color="#fff"
+            ariaLabel="tail-spin-loading"
+            radius=".1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={submitting ? true : false}
+          />
+        </button>
+        {submitted ? (
+          <div className={styles.submitted}>
+            <p className={styles.submittedText}>Submitted Successfully</p>
+            <BiSolidCheckCircle className={styles.submittedIcon} />
+          </div>
+        ) : (
+          ""
+        )}
+        {/* <img style={{width:'300px',height:'300px'}} src={selectedFile?URL.createObjectURL(selectedFile):''} alt="" /> */}
       </div>
     </div>
   );
