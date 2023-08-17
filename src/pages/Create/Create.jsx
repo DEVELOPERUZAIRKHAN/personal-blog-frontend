@@ -12,7 +12,6 @@ export default function Create() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resizedImage, setResizedImage] = useState(null);
-  const [photoFocus, setPhotoFocus] = useState(false)
   const [blurFlag, setBlurFlag] = useState({
     author: false,
     description: false,
