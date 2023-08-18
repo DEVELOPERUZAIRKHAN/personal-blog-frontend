@@ -1,7 +1,7 @@
 import styles from "./BlogDetail.module.css"
 import { useNavigate, useParams } from "react-router-dom"
 import {useState, useEffect} from "react"
-import { getById } from "../../api/internal"
+import { deleteBlog, getById } from "../../api/internal"
 import Navbar from "../../components/Navbar/Navbar"
 import Loader from "../../components/Loader/Loader"
 export default function BlogDetail(){
@@ -65,8 +65,22 @@ export default function BlogDetail(){
                 </p>
             </div>
             <div className={styles.container}>
-                <button onClick={_=>navigate('/blog/'+id+'/update')} className={styles.edit}>Edit</button>
-                <button className={styles.delete}>Delete</button>
+                <button onClick={_=>{
+                navigate('/blog/'+id+'/update')
+                }
+                } className={styles.edit}>Edit</button>
+                <button onClick={ async _=>{
+                   let response;
+                    try{
+                  response = await deleteBlog(id)
+
+                    }
+                    catch(error){
+                        console.log('error deleting the blog',error)
+                    }
+                    navigate('/blog')
+                    console.log(response)
+                }} className={styles.delete}>Delete</button>
             </div>
         </div>
     )

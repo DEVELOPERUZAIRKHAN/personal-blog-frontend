@@ -5,34 +5,10 @@ import { editBlog,getById } from "../../api/internal.js";
 import { resizePhoto } from "./resizer";
 import { BiSolidCheckCircle } from "react-icons/bi";
 import Navbar from "../../components/Navbar/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export default function Update() {
   /*********THE STATES**********/
-   const {id} = useParams()
-
-   useEffect(() => {
-    let response ;
-    (async _=>{
-      try {
-        const  innerResponse = await getById(id)
-        console.log(innerResponse)
-        response = innerResponse.data.blog;
-        
-      } catch (error) {
-       return console.log('error from getting the blog', error)
-      }
-    })()
-
-    
-
-     
-   
-     return () => {
-       
-     }
-   }, [])
-   
-
+  const navigate = useNavigate()
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -58,59 +34,63 @@ export default function Update() {
     description: "",
     author: "",
   });
-  
   /*********THE STATES**********/
+
+   const {id} = useParams()
+   useEffect(() => {
+    let response;
+
+    (async _=>{
+      try {
+        const  innerResponse = await getById(id)
+        response = innerResponse.data.blog;
+        console.log(response)
+        setBlog({
+          title:response.title,
+          description:response.description,
+          content:response.content,
+          author:response.author,
+        })
+      } catch (error) {
+       return console.log('error from getting the blog', error)
+      }
+    })()
+
+     return () => {
+       
+     }
+   }, [])
+   
+
 
 
   const postData = async () => {
+    console.log('posting......')
     const formData = new FormData();
     formData.append("title", blog.title);
     formData.append("content", blog.content);
     formData.append("description", blog.description);
     formData.append("author", blog.author);
-    formData.append("file", selectedFile);
+    if(selectedFile){
+      formData.append("file", selectedFile);
+    }
 let response;
 try{
-  //  response = await createBlog(formData);
+   response = await editBlog(id,formData);
   setSubmitting(false);
   console.log(response);
-  if (response.status === 201) {
+  if (response.status === 202) {
     setSubmitted(true);
+    navigate('/blog/'+id)
   }
-
+  else if(response.status===201){
+    setSubmitted(true);
+    navigate('/blog/'+id)
+  }
 }
 catch(error){
   console.log('error submitting blog',error)
 }
-finally{
-  if (fileInputRef.current) {
-    fileInputRef.current.value = null;
-  }
-  setBlog({
-    title: "",
-    content: "",
-    description: "",
-    author: "",
-  });
-  
-  setError({
-    title: "",
-    content: "",
-    description: "",
-    author: "",
-    photo:""
-  });
-  setBlurFlag({
-    author: false,
-    title: false,
-    content: false,
-    description: false,
-    photo: false,
-  });
-  setSelectedFile(null);
-
-}
-
   };
 
   const validateTitle = (title) => {
@@ -224,8 +204,8 @@ if(!title){
     console.log("photo validation starts");
     
 
-    if(!photo){setError(prevError=>({...prevError,photo:"Photo is required"}))
-    return false
+    if(!photo){setError(prevError=>({...prevError,photo:""}))
+    return true
   }
     else if(photo.type!== 'image/png'&&photo.type!=='image/jpeg'&&photo.type!=='image/jpeg'){
       setError(prevError=>({...prevError,photo:"The file must have to be a valid image"}))
@@ -279,7 +259,6 @@ if(!title){
             const resized =  await resizePhoto(uploadedFile)
             console.log(resized ,'The resized in change')
             setSelectedFile(resized)
-
           }
           catch(error){
             console.log("error resizing the image",error)
@@ -307,7 +286,7 @@ if(!title){
     <div className={styles.main}>
       <Navbar />
       <div className={styles.form}>
-        <h1 className={styles.mainHeading}>CREATE BLOG POST</h1>
+        <h1 className={styles.mainHeading}>UPDATE BLOG POST</h1>
         <>
           <input
             disabled={submitting}
@@ -421,13 +400,13 @@ if(!title){
            const descriptionRes = validateDescription(blog.description)
            const contentRes = validateContent(blog.content)
            const photoRes =  validatePhoto(selectedFile)
-            if(photoRes&&titleRes&&authorRes&&descriptionRes&&contentRes&&blog.title&&blog.author&&blog.content&&blog.description&&selectedFile){
+            if(photoRes&&titleRes&&authorRes&&descriptionRes&&contentRes&&blog.title&&blog.author&&blog.content&&blog.description){
             setSubmitting(true)
             postData()
             }
             }}
         >
-          {submitting ? "Submitting" : "Submit Blog"}
+          {submitting ? "Updating" : "Update Blog"}
           <TailSpin
             height="30"
             width="30"
@@ -441,7 +420,7 @@ if(!title){
         </button>
         {submitted ? (
           <div className={styles.submitted}>
-            <p className={styles.submittedText}>Submitted Successfully</p>
+            <p className={styles.submittedText}>Updated Successfully</p>
             <BiSolidCheckCircle className={styles.submittedIcon} />
           </div>
         ) : (
