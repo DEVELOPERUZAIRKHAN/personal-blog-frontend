@@ -9,4 +9,5 @@ display: none;
 
 .main{
   min-height: 87vh;
+  overflow: hidden;
 }
