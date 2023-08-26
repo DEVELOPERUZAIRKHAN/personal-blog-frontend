@@ -70,33 +70,33 @@ return (
                     <div className={styles.firstItem}>
                         <img className={styles.leftPhoto} src={`${blogs[1].photo}`} alt="" />
                         <h3 className={styles.leftHeading}>{truncateTitle(blogs[1].title,46)}</h3>
-                        <p className={styles.leftPara}>{truncateTitle(blogs[1].description,70)}</p>
+                        <p className={styles.leftPara}>{truncateTitle(blogs[1].description,68)}</p>
                         <button onClick={()=>navigate('/blog/'+blogs[1]._id)} className={styles.leftButton}>Read Article</button>
                     </div>
                     <div className={styles.firstItem}>
                         <img className={styles.leftPhoto} src={`${blogs[2].photo}`} alt="" />
                         <h3 className={styles.leftHeading}>{truncateTitle(blogs[2].title,46)}</h3>
-                        <p className={styles.leftPara}>{truncateTitle(blogs[2].description,70)}</p>
+                        <p className={styles.leftPara}>{truncateTitle(blogs[2].description,68)}</p>
                         <button onClick={()=>navigate('/blog/'+blogs[2]._id)} className={styles.leftButton}>Read Article</button>
                     </div>
                 </div>
                 <div className={styles.rightFirst}>
                     <div className={styles.rightItem}>
-                        <h3 style={{marginTop:'0'}} className={styles.rightHeading}>{truncateTitle(blogs[3].title,60)}</h3>
+                        <h3 style={{marginTop:'0'}} className={styles.rightHeading}>{truncateTitle(blogs[3].title,70)}</h3>
                         <p className={styles.rightPara}>{truncateTitle(blogs[3].description,70)}</p>
                         <button onClick={()=>{navigate('/blog/'+blogs[3]._id)}} className={styles.rightButton}>Read this article</button>
 
                     </div>
             
                     <div className={styles.rightItem}>
-                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[4].title,60)}</h3>
+                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[4].title,70)}</h3>
                         <p className={styles.rightPara}>{truncateTitle(blogs[4].description,70)}</p>
                         <button onClick={_=>navigate('/blog/'+blogs[4]._id)} className={styles.rightButton}>Read this article</button>
 
                     </div>
             
                     <div className={styles.rightItem}>
-                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[5].title,60)}</h3>
+                        <h3 className={styles.rightHeading}>{truncateTitle(blogs[5].title,70)}</h3>
                         <p className={styles.rightPara}>{truncateTitle(blogs[5].description,70)}</p>
                         <button onClick={_=>navigate('/blog/'+blogs[5]._id)} className={styles.rightButton}>Read this article</button>
 
