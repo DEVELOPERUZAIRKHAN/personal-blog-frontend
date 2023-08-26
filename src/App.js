@@ -1,5 +1,5 @@
 import styles from "./App.module.css"
-import {Route,Routes,BrowserRouter, useNavigate} from "react-router-dom"
+import {Route,Routes,BrowserRouter} from "react-router-dom"
 import Blog from "./pages/Blog/Blog";
 import BlogDetail from "./pages/BlogDetail/BlogDetail";
 import Create from "./pages/Create/Create";
@@ -10,7 +10,7 @@ import Footer from "./components/Footer/Footer";
 
 
 function App() {
-  const navigate =  useNavigate()
+
 
   return (<>
 
