@@ -5,6 +5,16 @@ import { deleteBlog, getById } from "../../api/internal"
 import Navbar from "../../components/Navbar/Navbar"
 import Loader from "../../components/Loader/Loader"
 export default function BlogDetail(){
+    const myArr = [
+        "64da717486f85b9b4e1068ee",
+        "64da736c86f85b9b4e1068f0"
+        ,"64da73c586f85b9b4e1068f2"
+        ,"64da744b86f85b9b4e1068f4"
+        ,"64da750686f85b9b4e1068f6"
+        ,"64da756b86f85b9b4e1068f8"
+        ,"64da7945e5c663011f50c7c9"
+    ]
+    const[showDel,setShowDel]= useState(true)
     const navigate = useNavigate()
     const {id} = useParams()
     const options = {
@@ -15,8 +25,11 @@ export default function BlogDetail(){
     const [data,setData] = useState(null) 
     useEffect(() => {
         
-      (async _=>{
-
+        (async _=>{
+            
+            myArr.forEach((item)=>{
+               return item===id?setShowDel(false):''
+            })
        const response = await getById(id)
            console.log(response)
            setData(response.data.blog)
@@ -64,7 +77,9 @@ export default function BlogDetail(){
                     }
                 </p>
             </div>
-            <div className={styles.container}>
+            {
+                showDel&&
+            (<div className={styles.container}>
                 <button onClick={_=>{
                 navigate('/blog/'+id+'/update')
                 }
@@ -81,7 +96,8 @@ export default function BlogDetail(){
                     navigate('/blog')
                     console.log(response)
                 }} className={styles.delete}>Delete</button>
-            </div>
+            </div>)
+            }
         </div>
     )
 
