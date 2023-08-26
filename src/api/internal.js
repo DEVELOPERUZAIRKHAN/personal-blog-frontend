@@ -1,7 +1,7 @@
 
 import axios from "axios";
 const api = axios.create({
-    baseURL:process.env.BACKEND_API_PATH,
+    baseURL:'https://blog-application-by-uzair.onrender.com',
     headers:{
         "Content-Type":"multipart/form-data"
     }
