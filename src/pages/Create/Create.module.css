@@ -160,5 +160,8 @@ font-weight: 700;
         max-width: 900px;
         width: 90%;
     }
+    .mainHeading{
+        font-size: 2rem;
+    }
 
 }

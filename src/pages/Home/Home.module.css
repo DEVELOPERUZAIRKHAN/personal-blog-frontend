@@ -349,7 +349,9 @@ border-radius: 20px;
 
 @media (max-width: 768px) {
     /* Mobile styles */
-
+    .mainHeading{
+        font-size: 2rem;
+    }
     .container{
         max-width: 768px;
         margin: 0 auto;
