@@ -115,7 +115,7 @@ return (
                             return ''
                         }
                        return (
-                    <div className={styles.secondItem}>
+                    <div key={index} className={styles.secondItem}>
                         <img className={styles.secondPhoto} src={`${blog.photo}`} alt="" />
                         <h3 className={styles.secondHeading}>{truncateTitle(blog.title,56)}</h3>
                         <p className={styles.secondPara}>{truncateTitle(blog.description,80)}</p>
