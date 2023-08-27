@@ -1,4 +1,4 @@
-# MyBlogApp Frontend
+# Devblogs Frontend
 
 Welcome to the frontend repository of DevBlogs, a Full-Stack CRUD Blog Web Application built using React.js. This repository contains the code for the user interface of the app.
 
