@@ -2,7 +2,6 @@ import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { getAll } from "../../api/internal";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Loader from "../../components/Loader/Loader";
 export default function Home(){
