@@ -36,10 +36,9 @@ const truncateTitle=(title,maxLength)=>{
     }, [])
 
 
-if(!blogs[0]){
+if(blogs.length<1){
 return (
     <>
-
     <Navbar/>
     <div className={styles.loaderContainer}>
     <Loader/>

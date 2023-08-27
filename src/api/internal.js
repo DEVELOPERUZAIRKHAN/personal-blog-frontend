@@ -1,7 +1,7 @@
 
 import axios from "axios";
 const api = axios.create({
-    baseURL:process.env.BACKEND_API_PATH,
+    baseURL:process.env.REACT_APP_BACKEND_API_PATH,
     headers:{
         "Content-Type":"multipart/form-data"
     }
@@ -13,6 +13,7 @@ export const createBlog=async (data)=>{
 try{    
     const response = await api.post("/create",data)
     return response
+
 }
 catch(error){
     console.log(`error of the api`)
@@ -58,6 +59,7 @@ try {
 
 export const getAll =async()=>{
     try {
+
           const response =  await api.get("/blogs/all")
           return response;
     } catch (error) {
