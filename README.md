@@ -23,7 +23,7 @@ npm start
 Open your browser and visit: http://localhost:3000
 
 3. Add the .env file and copy the following code and replace your api endpoint with actual url of your endpoint
-BACKEND_API_PATH= [Your API endpoint ]
+REACT_APP_BACKEND_API_PATH= [Your API endpoint ]
 
 4. If you want to make the app work perfectly then you have to clone the backend as well or you can create
 your own api link to the api repo is at the end.
